@@ -25,34 +25,47 @@ import {
 } from 'parity-reactive-ui';
 
 import {
+	CounterCode,
 	CounterHash,
 	CounterABI
 } from './abi';
 
 const Options = ['Red', 'Green', 'Blue'];
 
-export class Screenshot0 extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			counter: bonds.makeContract(CounterHash, CounterABI)
-		};
-	}
-	render() {
-		return(<div>
-			<Counter contract={this.state.counter} />
-		</div>);
-	}
-};
-
 class BaseScene extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			tx: null
+			tx: null,
+			counter: null
 		};
+		this.deploy = this.deploy.bind(this);
+	}
+
+	deploy() {
+		const tx = bonds.deployContract(CounterCode, CounterABI);
+		this.setState({
+			tx
+		});
+		tx.done(s => this.setState({
+			counter: s.deployed
+		}))
 	}
 }
+
+export class Screenshot0 extends BaseScene {
+	render() {
+		return(<div>
+			{!!this.state.counter
+					? <Counter contract={this.state.counter} />
+					: <div>
+						<BButton content='Deploy' onClick={this.deploy}/>
+						<TransactionProgressLabel value={this.state.tx}/>
+					</div>
+				}
+		</div>);
+	}
+};
 
 class VoteOptionBarIcons extends ReactiveComponent {
 	constructor() {
@@ -90,13 +103,21 @@ class VoteOptionBarIcons extends ReactiveComponent {
 	}
 }
 
-class Counter extends BaseScene {
+class Counter extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			tx: null,
+		};
+	}
 
 	componentWillMount() {
 		this.componentWillReceiveProps(this.props);
 	}
 	componentWillReceiveProps(props) {
-		const {contract} = this.props;
+		const {
+			contract
+		} = this.props;
 		this.voted = contract.hasVoted(bonds.me);
 		this.prevVote = contract.Voted({
 			who: bonds.me
