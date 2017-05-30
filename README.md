@@ -1,17 +1,44 @@
-# Skeleton dapp.
+# Screenshot Generator for Skeleton dapp Tutorial.
 
-To install:
+## Related Wiki:
+
+https://github.com/paritytech/parity/wiki/Dapp-Tutorial
+
+## To install:
 
 ```
 $ npm install
-$ npm install -g webpack
 ```
 
-To build:
+## To build:
 
 ```
-webpack --watch
+$ npm run watch
 ```
 
 Files will be build into `dist/`. Just symlink that dir into your dapps path.
 
+## To generate screenshots:
+
+Open 3 terminal, both `cd`'ed to this project directory.
+
+On terminal 1, do:
+
+```
+$ npm run start:chrome // or npm run start:chromium
+```
+
+On terminal 2, do:
+
+```
+$ npm run watch
+```
+
+
+Then on terminal 3, do:
+
+```
+$ npm run screenshot
+```
+
+The runner only capture screenshot of the first layer. It will be better to write E2E test for each Tutorial then for each test take screenshot. But writing test would take more than 48H...
