@@ -1,0 +1,12 @@
+{
+	"token": "h5LJ-zqW6-uUG1-fcDT",
+  "tuts": [1, 5, 8, 4, 5, 1, 2, 2, 3],
+  "format": "png",
+  "width": 630,
+  "height": 360,
+	"delay": 3000,
+	"storageId": {
+		"securityOrigin": "http://parity.web3.site:8180",
+		"isLocalStorage": true
+	}
+}
