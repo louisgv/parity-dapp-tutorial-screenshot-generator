@@ -32,24 +32,28 @@ import {
 
 const Options = ['Red', 'Green', 'Blue'];
 
+const {localStorage} = window;
+
 class BaseScene extends React.Component {
 	constructor() {
 		super();
+		const {counterAddress} = localStorage;
 		this.state = {
-			tx: null,
-			counter: null
+			counter: counterAddress
+				? bonds.makeContract(counterAddress, CounterABI)
+				: null
 		};
 		this.deploy = this.deploy.bind(this);
 	}
 
 	deploy() {
 		const tx = bonds.deployContract(CounterCode, CounterABI);
-		this.setState({
-			tx
-		});
-		tx.done(s => this.setState({
-			counter: s.deployed
-		}))
+		tx.done(s => {
+			const counter = s.deployed;
+			this.setState({counter})
+			localStorage.counterAddress = counter.address;
+		})
+		return tx;
 	}
 }
 
@@ -59,8 +63,7 @@ export class Screenshot0 extends BaseScene {
 			{!!this.state.counter
 					? <Counter contract={this.state.counter} />
 					: <div>
-						<BButton content='Deploy' onClick={this.deploy}/>
-						<TransactionProgressLabel value={this.state.tx}/>
+						<TransactButton content='Deploy' tx={this.deploy} statusText/>
 					</div>
 				}
 		</div>);
