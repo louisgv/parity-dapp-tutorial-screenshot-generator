@@ -42,3 +42,11 @@ $ npm run screenshot
 ```
 
 The runner only capture screenshot of the first layer. It will be better to write E2E test for each Tutorial then for each test take screenshot. But writing test would take more than 48H...
+
+# LICENSE
+
+RTFS
+	? UTFS
+		? MIT
+		: LGPL 3.0
+	: GPL v3.0

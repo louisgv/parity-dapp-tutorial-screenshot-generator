@@ -7,6 +7,8 @@ export const CounterABI = [
 	{"anonymous":false,"inputs":[{"indexed":true,"name":"who","type":"address"},{"indexed":true,"name":"option","type":"uint256"}],"name":"Voted","type":"event"}
 ]
 
+export const CounterCodeHash = '0x5163b7227503307ab5c937d53434927cdc5d8d295eb11cf578462ee1fc5bff27';
+
 export const CounterCode = '\
 0x6060604052341561000c57fe5b5b61017d8061001c6000396000f300606060405263fffff\
 fff60e060020a6000350416630121b93f811461003757806309eef43e1461004c5780635df8\
